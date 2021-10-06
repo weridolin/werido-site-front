@@ -110,14 +110,14 @@ export default {
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css?family=Lato:300');
 
-body {
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: #222;
-}
+// body {
+//   display: flex;
+//   height: 100vh;
+//   justify-content: center;
+//   align-items: center;
+//   text-align: center;
+//   background: #222;
+// }
 
 .rainbow {
   letter-spacing: 0.2rem;

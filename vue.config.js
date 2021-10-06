@@ -20,7 +20,7 @@ module.exports = {
 	//运行目录：开发环境：都在根目录。生产环境，前台在根目录，后台在子目录下运行
     publicPath: IS_PROD ? outputPath == 'home' ? '/' : '../' + outputPath + '/' : '/',
 	// 输出目录，
-    outputDir: './' + outputPath,
+    outputDir: './dist/' +"home" ,
 
     //多页面配置 ，即配置每个PAGE的MAIN.JS和
     pages: {
