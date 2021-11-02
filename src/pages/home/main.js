@@ -123,16 +123,6 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$partyLogin = process.env.VUE_APP_API_URL;
 http.defaults.baseURL = process.env.VUE_APP_URL;
 
-// Vue.use(animated)
-// 百度统计
-// var _hmt = _hmt || [];
-// (function() {
-//     var hm = document.createElement("script");
-//     hm.src = "https://hm.baidu.com/hm.js?68f23509711f01e6938f3f4dc081c230";
-//     var s = document.getElementsByTagName("script")[0];
-//     s.parentNode.insertBefore(hm, s);
-// })();
-
 Vue.config.productionTip = false
     // 简单配置
 NProgress.inc(0.2)
@@ -142,16 +132,11 @@ NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
 //     from：从哪个路由离开
 //     next：路由的控制参数，常用的有next(true)和next(false)
 router.beforeEach((to, from, next) => {
+    console.info("now path:",from ,"to path:",to,to.meta)
     NProgress.start()
     if (to.meta.title) {
         document.title = to.meta.title
     }
-    // if (_hmt) {
-    //     if (to.path) {
-    //         console.log(to.fullPath)
-    //         _hmt.push(['_trackPageview', '/#' + to.fullPath]);
-    //     }
-    // }
     next()
     const route = document.getElementsByClassName('route-content')[0]
     if (route) {
@@ -162,19 +147,9 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
         NProgress.done()
     })
-    // #在main.js定义自定义指令
-    // Vue.directive('highlight', function(el) {
-    //         let blocks = el.querySelectorAll('pre code');
-    //         blocks.forEach((block) => {
-    //             hljs.highlightBlock(block)
-    //         })
-    //     })
-    // Vue.prototype.$EventBus = new Vue();
-
 
 //创建一个VUE实例 其中h是createElement的一个别名 APP对应引入的APP.VUE
 new Vue({
-    vuetify,
     router,
     store,
     render: h => h(App)

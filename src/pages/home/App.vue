@@ -7,11 +7,10 @@
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive" class="route-content"></router-view>
     </keep-alive>
-<!--     </transition> -->
-<!--     <transition name="slide-left"> -->
+
     <router-view v-if="!$route.meta.keepAlive" class="route-content"></router-view>
     <!-- </transition> -->
-    <index-footer :route="$route.path" v-show="$route.meta.footer"></index-footer>
+    <index-footer :route="$route.path" v-show="$route.meta.footer && $route.path!=='/drug'"></index-footer>
     <transition name="slide-fade">
         <el-backtop :right="20" >
           <!-- <span  class="iconfont" style=""></span> -->
@@ -20,16 +19,6 @@
     </transition>
     <!-- APP.vue定义组件都是页面公用的App.vue是项目的主组件，页面入口文件 ，所有页面都在App.vue下进行切换，app.vue负责构建定义及页面组件归集 -->
     <music></music> 
-    <!-- <el-dialog :title="title" :visible.sync="dialogVisible" width="35%">
-      <my-marked :initialValue="content"></my-marked>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-tooltip class="item" effect="light" content="点击确定，下次不再弹出！" placement="top">
-          <el-button type="primary" @click="confirm" style="background-color:var(--main-6)">确定</el-button>
-        </el-tooltip>
-      </span>
-    </el-dialog> -->
-    <!-- </el-scrollbar> -->
   </div>
 </template>
 <script>
@@ -49,8 +38,6 @@ export default {
   },
   data() {
     return {
-      // wechat_img_url:require("@/assets/wechat.png"),
-      // qq_img_url:require("@/assets/qq.jpg"),
       dialogVisible: false,
       title: "公告",
       content: "",
@@ -60,26 +47,7 @@ export default {
   watch:{
   },
   methods: {    
-    // getSysMess() {
-    //   let that = this;
-    //   that
-    //     .$get("/api/v1/sysmess/list")
-    //     .then(function (response) {
-    //       if (response.data.id > 0) {
-    //         that.title = response.data.title;
-    //         that.content = response.data.content;
-    //         that.id = response.data.id;
-    //         let sysMess_id = localStorage["sysMess_id"];
-    //         console.log(response.data);
-    //         if (sysMess_id != response.data.id) {
-    //           that.dialogVisible = true;
-    //         }
-    //       }
-    //     })
-    //     .catch(function (error) {
-    //       // console.log(error.data);
-    //     });
-    // },
+
     myFun(result){
         var cityName = result.name;
         //map.setCenter(cityName);
@@ -97,9 +65,7 @@ export default {
         }
   },
   mounted() {
-    // this.getSysMess();
-    // var geolocation = new qq.maps.Geolocation('MAVBZ-RQXRF-D5YJV-J46RA-VTMFS-LFFF5','myapp');
-    // console.log(window._DEFAULT_CITY)
+
   },
 };
 </script>

@@ -118,7 +118,7 @@ module.exports = {
                         compress: {
                             // warnings: false, // 若打包错误，则注释这行
                             drop_debugger: true,
-                            drop_console: true,
+                            drop_console: false, //为true则注销
                             pure_funcs: ['console.log']
                         }
                     },

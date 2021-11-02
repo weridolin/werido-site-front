@@ -79,7 +79,7 @@ const routes = [{
             keepAlive: true, // 需要被缓存
             title: '文章-' + name,
             nav: nav1,
-            footer:true,
+            footer:false,
             header:true
         }
     },
@@ -89,7 +89,7 @@ const routes = [{
         component: BlogContent,
         meta: {
             nav: nav1,
-            footer:true,
+            footer:false,
             header:true
         }
     },
@@ -137,9 +137,9 @@ const routes = [{
         name: 'Drug',
         component: Drug,
         meta: {
-            // keepAlive: true, // 需要被缓存
+            keepAlive: true, // 需要被缓存
             title: '毒',
-            nav: nav1,
+            nav: nav,
             footer:false,
             header:false
         }

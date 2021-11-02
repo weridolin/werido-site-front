@@ -1,33 +1,16 @@
 <template>
-  <!-- <div class="container-fluid footer" v-show="route!='/blog'">
-            <p class="link a-tag">
-                <router-link to="/">主页</router-link>|
-                <router-link to="/blog">博客</router-link>|
-                <router-link to="/message">留言</router-link>|
-                <router-link to="/route">成长</router-link>|
-                <router-link to="/link">友链</router-link>
-            </p>
-            <p>© 2020 - {{year}} 云墨白 All Rights Reserved.</p>
-            <a class="a-flex" target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><span>本网站由</span><img class="ypy" src="~@/assets/logo8.png"><span>提供CDN加速/云存储服务</span></a>
-		 	<a class="a-flex" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=34030002020734" ><img class="logo" src="~@/assets/备案图标.png" /><span>皖公网安备 34030002020734号</span></a>
-            <a target="_blank" href="http://www.beian.miit.gov.cn/">皖ICP备2020014908号-1</a>
-    </div> -->
-  <footer class="footer" v-show="route != '/blog'">
+  <footer class="footer">
     <div class="container">
       <div class="foot-row service">
         <p class="title">own to werido,仅供学习用，侵权请告知</p>
-                           <ul class="link">
-                               <li><router-link to="/link">友链</router-link></li>
-
-        <!--                        <li><router-link to="/">项目</router-link></li>-->
-
-                               <li><router-link to="/message">留言</router-link></li>
-
-                               <li><router-link to="/blog">博客</router-link></li>
-
-                               <li><router-link to="/">主页</router-link></li>
-                               <li><router-link to="/">💡💡</router-link></li>
-                           </ul>
+        <ul class="link">
+          <li><router-link to="/drug">毒</router-link></li>
+          <li><router-link to="/link">友链</router-link></li>
+          <li><router-link to="/message">留言</router-link></li>
+          <li><router-link to="/blog">博客</router-link></li>
+          <li><router-link to="/">主页</router-link></li>
+          <li><router-link to="/">💡💡</router-link></li>
+        </ul>
       </div>
       <div class="foot-row provide">
         <span
@@ -65,13 +48,17 @@
         </div>
       </div>
       <div class="foot-row publicity">
-        <span><a target="_blank" href="http://www.beian.miit.gov.cn/">粤ICP备2020119623号</a></span>
+        <span
+          ><a target="_blank" href="http://www.beian.miit.gov.cn/"
+            >粤ICP备2020119623号</a
+          ></span
+        >
         <!--                <span><a class="a-flex" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=34030002020734" >皖公网安备 34030002020734号</a></span>-->
       </div>
       <div class="foot-row bottom">
         <p class="copyright">
-          © 2021 - {{ year }} <a href="https://github.com/weridolin">werido</a> All
-          Rights Reserved.
+          © 2021 - {{ year }}
+          <a href="https://github.com/weridolin">werido</a> All Rights Reserved.
         </p>
         <div class="share">
           <!-- <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2401694354&site=qq&menu=yes" class="iconfont qq" title="使用QQ账号登录" @click="partyLogin('qq')">&#xe651;</a> -->
@@ -133,13 +120,15 @@ export default {
     }
 
     .service {
-      margin:20px 0 0 0;
+      margin: 20px 0 0 0;
       font-size: 16px;
+
       .link {
         li {
-          float: right; //靠右浮动
+          float: right; // 靠右浮动
           margin: 0 20px;
-          a{
+
+          a {
             font-size: 14px;
           }
         }
@@ -151,7 +140,8 @@ export default {
         display: flex;
         justify-content: stretch;
         align-items: center;
-        margin:50px 0 0 0;
+        margin: 50px 0 0 0;
+
         .ypy {
           height: 50 px;
         }

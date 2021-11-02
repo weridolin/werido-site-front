@@ -520,7 +520,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fff url('https://p.pstatp.com/origin/1373e0001435e411dd94b'); // p.pstatp.com/origin/1373e0001435e411dd94b)
+    // background: #fff url('https://p.pstatp.com/origin/1373e0001435e411dd94b'); // p.pstatp.com/origin/1373e0001435e411dd94b)
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

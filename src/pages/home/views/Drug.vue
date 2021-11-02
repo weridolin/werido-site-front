@@ -20,14 +20,6 @@
     >
     </vue-particles>
     <el-row  class="el-row-one">
-      <!-- <div >
-            <span>雨纷纷</span>
-            <el-divider direction="vertical"></el-divider>
-            <span>旧故里</span>
-            <el-divider direction="vertical"></el-divider>
-            <span>草木深</span>
-        </div> -->
-      <!-- <el-image :src="src"></el-image> -->
     </el-row>
     <el-row class="drug-top" >
       <div class="drug-info container">
@@ -35,26 +27,18 @@
         <i class="drug-word"
           >{{this.word.content}}</i
         >
-        
-        <!-- </h1> -->
-        <!-- <learning class="load-text blog-animation"></learning> -->
+
       </div>
     </el-row>
 
     <el-row>
-      <!-- <el-button type="primary" round>点我复制</el-button>
-      <el-button type="danger" round style="margin-left: 5%; margin-right: 15%"
-        >再来一条</el-button> -->
-      <!-- <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11">
-      </el-col> -->
-
-      <el-col :xs="24" :sm="24" :md="24" :lg="23" :xl="23">
+      <el-col :xs="22" :sm="22" :md="24" :lg="23" :xl="23">
         <div class="drug-button-group" style="text-align: right">
           <a href="#" class="drug-button"  @click="copy()" >点我复制</a>
           <a href="#" class="drug-button" @click="next()">再来一条</a>
         </div>
       </el-col>
-      <el-col :xs="0" :sm="0" :md="0" :lg="1" :xl="1">
+      <el-col :xs="2" :sm="2" :md="0" :lg="1" :xl="1">
         <div></div>
       </el-col>
     </el-row>
@@ -129,6 +113,9 @@ export default {
     animation: rainbow 50s alternate infinite forwards;
   }
 }
+.drug-top {
+  height: 10%;
+}
 
 @keyframes rainbow {
   @for $i from 0 through 20 {
@@ -151,7 +138,7 @@ export default {
   color: #fff;
   text-decoration: none;
   font-size: 40px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 1px;
   margin: 0 25px;
   display: block;
@@ -199,13 +186,29 @@ export default {
     font-size: 18px !important;
   }
 
+  .drug-top {
+    height: 60%;
+  }
+  .drug-button {
+  position: relative;
+  padding: 10px 30px;
+  // margin: 0 20px;
+  color: #21ebff;
+  text-decoration: none;
+  font-size: 15px;
+  text-transform: uppercase;
+  transition: 0.5s;
+  overflow: hidden;
+  -webkit-box-reflect: below 1px linear-gradient(transparent, #0003);
+  }
+
   .drug-word {
     color: #fff;
     text-decoration: none;
-    font-size: 30px;
+    font-size: 20px;
     // font-weight: 700;
     letter-spacing: 1px;
-    margin: 120px 10px;
+    margin:120px 10px;
     display: block;
     text-align: center;
     text-shadow: 0 0 10px rgb(20, 129, 202), ;
@@ -214,21 +217,12 @@ export default {
   .el-row-one{
       margin-bottom:30%;
   }
-//   .el-row {
-//     margin-bottom:30%;
-//     // &:first-child {
-//     //   margin-bottom: 30%;
-//     // }    
-//     &:last-child {
-//       margin-bottom: 0;
-//     }
-//   }
 }
 
 .drug-button {
   position: relative;
   padding: 10px 30px;
-  margin: 0 40px;
+  margin: 0 20px;
   color: #21ebff;
   text-decoration: none;
   font-size: 15px;
@@ -290,4 +284,5 @@ export default {
   height: 100%;
   transition-delay: 0s;
 }
+
 </style>

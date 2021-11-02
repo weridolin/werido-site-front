@@ -6,7 +6,7 @@
  * @Date: 2021-10-02 16:28:06
  * @platform: windows 10
  * @LastEditors: lhj
- * @LastEditTime: 2021-10-05 16:21:19
+ * @LastEditTime: 2021-11-02 22:38:28
  */
 import axios from 'axios'
 import store from '../pages/admin/store'
@@ -102,6 +102,7 @@ instance.interceptors.response.use(function(response) {
                 title: '错误提示 ' + error.response.status,
                 message: error.response.data.message,
             });
+            break;
 
     }
 

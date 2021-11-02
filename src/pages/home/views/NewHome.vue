@@ -117,7 +117,7 @@ export default {
             // that.current_page = res.data.current_page;
             that.last_page = res.last_page;
             that.count = res.count
-            console("now page ",that.current_page,"last_page",that.last_page)
+            console.info("now page ",that.current_page,"last_page",that.last_page)
 
           } else {
             Notification.error({

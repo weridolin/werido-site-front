@@ -102,6 +102,7 @@
 </template>
 <script>
 import Bus from "@/utils/bus.js";
+
 export default {
   name: "Music",
   data() {
@@ -283,6 +284,7 @@ export default {
     mCanplay() {
       this.canplay = true;
       if (this.loading) {
+
         this.audio.play(); // 播放
         this.isPlay = true;
       }
@@ -327,6 +329,7 @@ export default {
   created() {
     // this.audio=document.getElementById('music')
     this.audio = document.createElement("audio");
+    this.audio.muted = true;
     this.getList();   
     let that = this;
     this.audio.addEventListener("canplay", that.mCanplay, false),
@@ -337,6 +340,7 @@ export default {
   },
   watch: {
     index(val) {
+      console.info(">>>> music index change",val)
       if (this.loading) {
         this.audio.pause(); // 暂停
         this.isPlay = false;
