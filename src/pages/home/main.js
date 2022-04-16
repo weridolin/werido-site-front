@@ -18,7 +18,6 @@ import echarts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueParticles from 'vue-particles'
 
-
 Vue.prototype.$echarts = echarts
 import {
     Pagination,
@@ -50,8 +49,14 @@ import {
     Tag,
     Timeline,
     TimelineItem,
-    Card
+    Card,
+    Upload,
+    Progress,
+    Drawer
 } from 'element-ui';
+Vue.use(Drawer)
+Vue.use(Progress)
+Vue.use(Upload);
 Vue.use(Timeline);
 Vue.use(TimelineItem);
 Vue.use(Card);
@@ -82,6 +87,7 @@ Vue.use(Dialog);
 Vue.use(Popconfirm);
 Vue.use(Loading.directive);
 Vue.use(VueParticles)
+
 
 // 不想污染全局作用域。这种情况下，你可以通过在 原型 上定义它们使其在每个Vue实例中可用。
 // Vue.prototype.$http = axios;
@@ -117,6 +123,7 @@ Vue.directive('highlight', function(el) {
 })
 Vue.prototype.$get = http.get;
 Vue.prototype.$post = http.post;
+Vue.prototype.$http = http;
 Vue.prototype.$axios = axios;
 
 //process 其实是veu.config.js配置过的变量的储存，就是上下文

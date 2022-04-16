@@ -26,10 +26,12 @@ const User = () =>
     import ('../views/User/User.vue')
 const Drug =()=>
     import ('../views/Drug.vue')
+const fileBroker =()=>
+    import ('../views/fileBroker.vue')
 
 
 Vue.use(VueRouter)
-const name = "werido "
+const name = "werido"
 const nav = {
     navNoQuiet: {
         boxShadow: ' 0px 10px 20px 4px  rgba(195,199, 199,0.4)',
@@ -130,6 +132,17 @@ const routes = [{
             nav: nav,
             footer:true,
             header:true
+        }
+    },
+    {
+        path: '/fileBroker',
+        name: 'fileBroker',
+        component: fileBroker,
+        meta: {
+            title: 'JJ慢传',
+            nav: nav,
+            footer:false,
+            header:false
         }
     },
     {

@@ -86,6 +86,11 @@ export default {
           tag: "更新轨迹",
           link: "/route",
         },
+        {
+          id: "7",
+          tag: "文件中转站",
+          link: "/fileBroker",
+        },
       ],
       success: [
         {
