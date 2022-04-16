@@ -331,7 +331,7 @@ export default {
     },
 
     sendChunk(item) {
-      console.log(">>>>>",item.chunk.name)
+      console.log(">>>>>发送分片",item)
       const formdata = new FormData()
       formdata.append("file", item.chunk)
       formdata.append("key", this.file_key)
