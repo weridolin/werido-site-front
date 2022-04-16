@@ -4,7 +4,7 @@ import { Notification } from 'element-ui';
 import router from '@/pages/home/router'
 var instance = axios.create({
     baseURL: process.env.VUE_APP_API_URL,
-    timeout: 1000*300,
+    timeout: 10000,
 });
 // 添加请求拦截器
 instance.interceptors.request.use(function(config) {
@@ -19,6 +19,9 @@ instance.interceptors.request.use(function(config) {
     // 对请求错误做些什么
     return Promise.reject(error);
 });
+
+
+
 
 // 添加响应拦截器
 instance.interceptors.response.use(function(response) {

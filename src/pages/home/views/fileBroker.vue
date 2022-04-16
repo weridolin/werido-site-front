@@ -196,6 +196,7 @@ export default {
         });
     },
     async upChange(file, fileList){
+      this.isStop = false   
       this.loading = true
       document.querySelector("#selectFile").textContent= file.name
         if (fileList.length >0) {
@@ -206,6 +207,7 @@ export default {
       this.fileInfo = chunkInfo.fileInfo
       this.percent = 0
       this.loading = false
+              
     },  
 
     cutBlob(file) {
@@ -285,11 +287,13 @@ export default {
           // 上传完成后会调用并从任务队列里面移除
           fetchArr.splice(fetchArr.indexOf(it), 1)
           }, err => {
+            console.log(">>>> 上传发生错误",err)
             this.isStop = true
             this.remainChunks.unshift(chunkItem) //将 chunkItem 添加到列表头并返回长度
             Promise.reject(err)
             }
-          )
+        )
+
         // 将该分片上传添加到任务列表里面
         fetchArr.push(it)
         let p = Promise.resolve()
@@ -298,6 +302,7 @@ export default {
         }
         return p.then(() => toFetch())
       }
+
       toFetch().then(() => {
         Promise.all(fetchArr).then(() => {
           callback()
@@ -345,8 +350,10 @@ export default {
         method: "put",
         data: formdata,
         headers: { "Content-Type": "multipart/form-data" },
+        timeout:0,
         onUploadProgress: (event) => {
           const { loaded, total } = event
+          console.log(">>>",loaded,total)
           this.uploadedChunkSize += loaded < total ? 0 : +loaded
           this.uploadedChunkSize > item.size && (this.uploadedChunkSize = item.size)
           this.percent = (this.uploadedChunkSize / item.size).toFixed(2) * 1000 / 10
