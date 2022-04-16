@@ -10,7 +10,7 @@ module.exports = {
 	// 由于部分插件，导致ie下空白
     transpileDependencies: ['vue-savedata', 'vue-baberrage'],
 
-        // 项目部署的基础路径
+    // 项目部署的基础路径
     // 我们默认假设你的应用将会部署在域名的根部，
     // 比如 https://www.my-app.com/
     // 如果你的应用时部署在一个子路径下，那么你需要在这里
