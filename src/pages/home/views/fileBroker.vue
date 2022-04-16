@@ -145,7 +145,7 @@ export default {
       isStop : false, // 暂停上传控制
       percent :0 ,// 上传百分比
       uploadedChunkSize:0, // 已完成上传的切片数
-      chunkSize:10*1024*1024 ,// 切片大小
+      chunkSize:2*1024*1024 ,// 切片大小
       file_key:null, //后台生成的文件 key
       fileName:"",//文件名称
       chunkCount:0,//切片数量
