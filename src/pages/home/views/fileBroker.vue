@@ -352,10 +352,10 @@ export default {
         headers: { "Content-Type": "multipart/form-data" },
         timeout:0,
         onUploadProgress: (event) => {
-          const { loaded, total } = event
-          console.log(">>>",loaded,total)
-          this.uploadedChunkSize += loaded < total ? 0 : +loaded
-          this.uploadedChunkSize > item.size && (this.uploadedChunkSize = item.size)
+          const { loaded, total } = event //当前上传的数据大小 整个要上传的数据大小
+          // this.uploadedChunkSize += loaded < total ? 0 : +loaded
+          this.uploadedChunkSize += loaded 
+          // this.uploadedChunkSize > item.size && (this.uploadedChunkSize = item.size)
           this.percent = (this.uploadedChunkSize / item.size).toFixed(2) * 1000 / 10
         }
       })
