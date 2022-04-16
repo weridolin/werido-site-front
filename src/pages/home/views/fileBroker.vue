@@ -316,7 +316,7 @@ export default {
       const data = {
         "file_key":that.file_key,
       }  
-      this.$post("http://127.0.0.1:8000/api/v1/fileBroker/downCode",data)
+      this.$post("/api/v1/fileBroker/downCode",data)
         .then(function (res) {
           // 注意这里的this不是指向Vue对象，this指向的是windows，和全局变量一样。
           that.down_code = res.code
@@ -341,7 +341,7 @@ export default {
 
 
       return this.$http({
-        url: "http://127.0.0.1:8000/api/v1/fileBroker",
+        url: "/api/v1/fileBroker",
         method: "put",
         data: formdata,
         headers: { "Content-Type": "multipart/form-data" },
@@ -360,7 +360,7 @@ export default {
         "file_name":this.fileName,
         "chunk_count":this.chunkCount
       }  
-      await this.$post("http://127.0.0.1:8000/api/v1/fileBroker",data)
+      await this.$post("/api/v1/fileBroker",data)
         .then(function (res) {
           console.log(res,"GET FILE UPLOAD INFO");
           that.file_key = res.key
@@ -374,7 +374,7 @@ export default {
     getFileInfoByDownCode(){
       if(this.downForm.down_code.length==5){
         let that = this
-        this.$get("http://127.0.0.1:8000/api/v1/fileBroker/search/"+this.downForm.down_code)
+        this.$get("/api/v1/fileBroker/search/"+this.downForm.down_code)
           .then(function (res) {
             console.log(res,"GET FILE INFO BY DOWN CODE",res.data.length,res.data[0]);
             if (res.data.length == 1){
@@ -394,7 +394,7 @@ export default {
       let that = this
       const downCode = this.downForm.down_code
       console.log(">>>>>> begin to down load file",downCode)
-      this.$get(`http://127.0.0.1:8000/api/v1/fileBroker?down_code=${downCode}`,{responseType: 'blob'}).then((blobContent)=>{        
+      this.$get(`/api/v1/fileBroker?down_code=${downCode}`,{responseType: 'blob'}).then((blobContent)=>{        
         let a = document.createElement('a')
         a.download =  that.downForm.down_fileName
         a.style.display = 'none'
