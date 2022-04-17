@@ -426,7 +426,7 @@ export default {
        * 所以，对于.txt,.png,.pdf等的预览功能我们就可以直接不设置download属性(前提是后端响应头的Content-Type: application/octet-stream，如果为application/pdf浏览器则会判断文件为 pdf ，自动执行预览的策略)
        */ 
       that.downForm.down_fileName && el.setAttribute('download', that.downForm.down_fileName);
-      el.href =`http://127.0.0.1:8000/api/v1/fileBroker?down_code=${downCode}`;
+      el.href =`${process.env.VUE_APP_API_URL}/api/v1/fileBroker?down_code=${downCode}`;
       console.log(el);
       document.body.appendChild(el);
       el.click();
