@@ -36,7 +36,7 @@
         <i slot="suffix" class="el-icon-document-copy" id="downCode"  @click="copyDownCode"></i>
       </el-input>
     </div>
-    <el-progress :text-inside="true" :stroke-width="26" :percentage="percent" id="uploadProgress" class="uploadProgress"></el-progress>
+    <el-progress :text-inside="true" :stroke-width="26" v-if="!isNaN(percent)" :percentage="percent" id="uploadProgress" class="uploadProgress"></el-progress>
 
     <el-drawer
       title="文件下载"
@@ -162,7 +162,8 @@ export default {
       formLabelWidth:"120px",
       direction:"rtl",
       loading:false, //加载
-      loadingText:"文件分析中"
+      loadingText:"文件分析中",
+      file_md5:""//文件MD5
 
     }
   },
@@ -219,7 +220,7 @@ export default {
         this.fileName = file.name
         this.chunkCount = chunkNums
         console.log(">>> 文件大小",file.size,"切割后的文件数目",chunkNums)
-
+        let that=this
         return new Promise((resolve, reject) => {
             const reader = new FileReader()
             reader.readAsArrayBuffer(file.raw)
@@ -227,6 +228,7 @@ export default {
                 const content = reader.result
                 spark.append(content)
                 const hash = spark.end()
+                that.file_md5 = hash
                 let startIndex = ''
                 let endIndex = ''
                 let contentItem = ''
@@ -366,13 +368,20 @@ export default {
       let that = this
       const data = {
         "file_name":this.fileName,
-        "chunk_count":this.chunkCount
+        "chunk_count":this.chunkCount,
+        "md5":this.file_md5
       }  
       await this.$post("/api/v1/fileBroker",data)
         .then(function (res) {
           console.log(res,"GET FILE UPLOAD INFO");
-          that.file_key = res.key
-          that.sendRequest(6,that.uploadedCallback)
+          if (res.is_exist){
+            console.log(">>>>>>> is already exist !" ,res)
+            that.percent = 100
+            that.down_code = res.data.download_code
+          }else{
+            that.file_key = res.key
+            that.sendRequest(6,that.uploadedCallback)           
+          }
         })
         .catch(function (error) {
           console.log(">>>",error)
@@ -424,7 +433,7 @@ export default {
        * href属性的地址必须是非跨域的地址，如果引用的是第三方的网站或者说是前后端分离的项目(调用后台的接口)，这时download就会不起作用。
        * 此时，如果是下载浏览器无法解析的文件，例如.exe,.xlsx..那么浏览器会自动下载，但是如果使用浏览器可以解析的文件，比如.txt,.png,.pdf....浏览器就会采取预览模式
        * 所以，对于.txt,.png,.pdf等的预览功能我们就可以直接不设置download属性(前提是后端响应头的Content-Type: application/octet-stream，如果为application/pdf浏览器则会判断文件为 pdf ，自动执行预览的策略)
-       */ 
+       */  
       that.downForm.down_fileName && el.setAttribute('download', that.downForm.down_fileName);
       el.href =`${process.env.VUE_APP_API_URL}/api/v1/fileBroker?down_code=${downCode}`;
       console.log(el);

@@ -139,7 +139,7 @@ const routes = [{
         name: 'fileBroker',
         component: fileBroker,
         meta: {
-            title: 'JJ慢传',
+            title: '文件慢传',
             nav: nav,
             footer:false,
             header:false
