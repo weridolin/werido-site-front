@@ -24,3 +24,4 @@ nginx/
 .vs/
 代码文件*
 READMELOCAL*
+dist/
