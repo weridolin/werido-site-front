@@ -28,7 +28,8 @@ const Drug =()=>
     import ('../views/Drug.vue')
 const fileBroker =()=>
     import ('../views/fileBroker.vue')
-
+const dataFaker =()=>
+    import ('../views/dataFaker.vue')
 
 Vue.use(VueRouter)
 const name = "werido"
@@ -140,6 +141,17 @@ const routes = [{
         component: fileBroker,
         meta: {
             title: '文件慢传',
+            nav: nav,
+            footer:false,
+            header:false
+        }
+    },
+    {
+        path: '/dataFaker',
+        name: 'dataFaker',
+        component: dataFaker,
+        meta: {
+            title: '数据生成器',
             nav: nav,
             footer:false,
             header:false
