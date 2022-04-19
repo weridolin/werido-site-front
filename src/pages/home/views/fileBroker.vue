@@ -1,4 +1,6 @@
 <template>
+<div class="bg">
+<el-row :gutter="20">
 <div     
     v-loading="loading"
     :element-loading-text="loadingText"
@@ -14,7 +16,7 @@
       :drag="true"
       :on-change="upChange"
       enctype="multipart/form-data"
-      :file-list="fileList"  
+      :file-list="fileList"
       :action="uploadUrl"
       :show-file-list ="false"
       >
@@ -42,6 +44,7 @@
       title="文件下载"
       :visible.sync="drawer"
       :direction="direction"
+      :size ="drawerSize"
       @open="openDrawer">
         <div class="demo-drawer__content">
           <el-form :model="downForm">
@@ -51,6 +54,9 @@
             <el-form-item label="已上传文件" :label-width="formLabelWidth">
               <el-tag size="small" class="downFile" closable></el-tag>
             </el-form-item>
+            <el-form-item label="过期时间" :label-width="formLabelWidth">
+              <div class="expire-time"> </div>
+            </el-form-item>
           </el-form>
           <div class="demo-drawer__footer">
             <el-button @click="closeDrawer">取 消</el-button>
@@ -58,10 +64,10 @@
           </div>
         </div>
     </el-drawer>
-
-
-
 </div>
+</el-row>
+</div>
+
 
 </template>
 
@@ -72,6 +78,15 @@
 body {
   background: #2f6792;
   font-family: "Exo 2";
+}
+
+.bg {
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  margin: auto;
+  position: absolute;
+  background: url('~@/assets/card-bg1.jpg') ;
+  background-size: 100% 100%;
 }
 
 #selectFile {
@@ -163,8 +178,8 @@ export default {
       direction:"rtl",
       loading:false, //加载
       loadingText:"文件分析中",
-      file_md5:""//文件MD5
-
+      file_md5:"",//文件MD5
+      drawerSize:"50%"
     }
   },
   methods:{
@@ -397,6 +412,7 @@ export default {
             if (res.data.length == 1){
                 // console.log(document.querySelector(".downFile"))
                 document.querySelector(".downFile").textContent = res.data[0].file_name
+                document.querySelector(".expire-time").textContent = that.compute(res.data[0].timedelta)+ "  后过期"
                 that.downForm.down_fileName = res.data[0].file_name
               }
             
@@ -406,11 +422,19 @@ export default {
           });
       } else{
         document.querySelector(".downFile").textContent = ""
+        document.querySelector(".expire-time").textContent=""
         this.downForm.down_fileName = ""
       }
     },
 
     downFile(){
+      if( this.downForm.down_code==""||this.downForm.down_code==null || this.downForm.down_code.length!=5){
+        this.$message({
+          message: '授权码非法',
+          type: 'error'
+        });
+        return
+      }
       let that = this
       const downCode = this.downForm.down_code
       // console.log(">>>>>> begin to down load file",downCode)
@@ -440,11 +464,46 @@ export default {
       document.body.appendChild(el);
       el.click();
       document.body.removeChild(el);
+    },
+
+    compute(timestamps){
+      var secondTime = parseInt(timestamps);// 秒
+      var minuteTime = 0;// 分
+      var hourTime = 0;// 小时
+      if(secondTime > 60) {//如果秒数大于60，将秒数转换成整数
+          //获取分钟，除以60取整数，得到整数分钟
+          minuteTime = parseInt(secondTime / 60);
+          //获取秒数，秒数取佘，得到整数秒数
+          secondTime = parseInt(secondTime % 60);
+          //如果分钟大于60，将分钟转换成小时
+          if(minuteTime > 60) {
+              //获取小时，获取分钟除以60，得到整数小时
+              hourTime = parseInt(minuteTime / 60);
+              //获取小时后取佘的分，获取分钟除以60取佘的分
+              minuteTime = parseInt(minuteTime % 60);
+          }
+      }
+      var time = "" + parseInt(secondTime) + "秒";
+
+      if(minuteTime > 0) {
+        time = "" + parseInt(minuteTime) + "分" + time;
+      }
+      if(hourTime > 0) {
+        time = "" + parseInt(hourTime) + "小时" + time;
+      }
+      return time;
     }
   },
   props:{
   },
   created(){
+    if(window.screen.availWidth<768){
+    //移动端
+      this.drawerSize="100%"
+    }else{
+        //PC端
+      this.drawerSize="50%"
+    }
   }
 };
 </script>
