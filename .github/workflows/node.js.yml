@@ -30,8 +30,6 @@ jobs:
       run: npm install
     - name: pack
       run: npm run build_home
-      run: ls
-      run: echo "begin to push to ecs"
     - name: Deploy to Server  
       uses: easingthemes/ssh-deploy@v2.0.7
       env:
