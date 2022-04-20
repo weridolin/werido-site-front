@@ -29,12 +29,12 @@ jobs:
       run: npm install
     - name: pack
       run: npm run build_home
-    - name: Deploy to Server  
-      uses: easingthemes/ssh-deploy@v2.0.7
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-        ARGS: "-avz --delete"
-        SOURCE: "./dist/"
-        REMOTE_HOST: ${{ secrets.SSH_HOST }}
-        REMOTE_USER: ${{ secrets.SSH_USERNAME }}
-        TARGET: "/pythons/"
+    - name: SSH Server Deploy
+      uses: kostya-ten/ssh-server-deploy@v4
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        port: "22"
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        scp_source: ./dist/
+        scp_target: /pythons/
