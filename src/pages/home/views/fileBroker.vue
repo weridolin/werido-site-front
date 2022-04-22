@@ -235,7 +235,7 @@ export default {
         }
         if (200*1024*1024 < file.size <= 500*1024*1024){
           console.log(">>> chunk size","20MB")
-          this.chunkSize = 10*1024*1024
+          this.chunkSize = 2*1024*1024  //太大进度条不能实施反馈
         }
       }
       this.isStop = false   
@@ -406,8 +406,7 @@ export default {
         timeout:0,
         onUploadProgress: (event) => {
           const { loaded, total } = event //当前上传的数据大小 整个要上传的数据大小
-          // this.uploadedChunkSize += loaded < total ? 0 : +loaded
-          this.uploadedChunkSize += loaded 
+          this.uploadedChunkSize += loaded < total ? 0 : +loaded  //TODO 只有上传完一个chunk才会更新一下进度 
           // this.uploadedChunkSize > item.size && (this.uploadedChunkSize = item.size)
           this.percent = (this.uploadedChunkSize / this.file_size).toFixed(2) * 1000 / 10
         }
