@@ -1,11 +1,11 @@
 <template>
-<div class="bg">
+<div class="bg"     
+  v-loading="loading"
+  :element-loading-text="loadingText"
+  element-loading-spinner="el-icon-loading"
+  element-loading-background="rgba(0, 0, 0, 0.8)"  >
 <el-row :gutter="20">
 <div     
-    v-loading="loading"
-    :element-loading-text="loadingText"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"  
     class="zone2"
   >
 
