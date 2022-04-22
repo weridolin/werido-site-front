@@ -213,6 +213,23 @@ export default {
         });
     },
     async upChange(file, fileList){
+      if (file.size > 500*1024*1024 ){
+        this.$message({
+          message: '由于服务器原因,当前文件上传的大小最大只能不超过500m',
+          type: 'error'
+        });
+        return      
+      }else{
+        if (file.size <= 200*1024*1024){            
+          console.log(">>> chunk size","2MB")
+          this.chunkSize = 2*1024*1024  
+          return
+        }
+        if (200*1024*1024 < file.size <= 500*1024*1024){
+          console.log(">>> chunk size","20MB")
+          this.chunkSize = 20*1024*1024
+        }
+      }
       this.isStop = false   
       this.loading = true
       document.querySelector("#selectFile").textContent= file.name
@@ -281,6 +298,13 @@ export default {
         )
     },
     uploadFile() {
+      if (this.fileName==null | this.fileName==""){
+      this.$message({
+          message: '请先选择文件!',
+          type: 'error'
+        });
+        return
+      }
       this.percent = 0
       this.uploadedChunkSize = 0
       this.fileUploadSetup()
