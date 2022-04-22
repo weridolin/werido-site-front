@@ -179,7 +179,9 @@ export default {
       loading:false, //加载
       loadingText:"文件分析中",
       file_md5:"",//文件MD5
-      drawerSize:"50%"
+      drawerSize:"50%",
+      file_size:null,//文件总大小
+      is_uploading:false
     }
   },
   methods:{
@@ -213,6 +215,13 @@ export default {
         });
     },
     async upChange(file, fileList){
+      if (this.is_uploading){
+        this.$message({
+          message: '当前文件正在上传,请上传完成后再重新选择！',
+          type: 'error'
+        });
+        return          
+      }
       if (file.size > 500*1024*1024 ){
         this.$message({
           message: '由于服务器原因,当前文件上传的大小最大只能不超过500m',
@@ -226,7 +235,7 @@ export default {
         }
         if (200*1024*1024 < file.size <= 500*1024*1024){
           console.log(">>> chunk size","20MB")
-          this.chunkSize = 20*1024*1024
+          this.chunkSize = 10*1024*1024
         }
       }
       this.isStop = false   
@@ -240,7 +249,7 @@ export default {
       this.fileInfo = chunkInfo.fileInfo
       this.percent = 0
       this.loading = false
-              
+            
     },  
 
     cutBlob(file) {
@@ -249,6 +258,7 @@ export default {
         const spark = new SparkMD5.ArrayBuffer() // 文件hash处理
         const chunkNums = Math.ceil(file.size / this.chunkSize) // 切片总数
         this.fileName = file.name
+        this.file_size = file.size
         this.chunkCount = chunkNums
         console.log(">>> 文件大小",file.size,"切割后的文件数目",chunkNums)
         let that=this
@@ -362,6 +372,7 @@ export default {
       const data = {
         "file_key":that.file_key,
       }  
+      this.is_uploading = false
       this.$post("/api/v1/fileBroker/downCode",data)
         .then(function (res) {
           // 注意这里的this不是指向Vue对象，this指向的是windows，和全局变量一样。
@@ -369,6 +380,7 @@ export default {
           console.log(res,"GET down load code");
           that.loadingText="分析文件中"
           that.loading=false
+          
         })
         .catch(function (error) {
           console.log(">>> GET down load code error",error)
@@ -397,12 +409,13 @@ export default {
           // this.uploadedChunkSize += loaded < total ? 0 : +loaded
           this.uploadedChunkSize += loaded 
           // this.uploadedChunkSize > item.size && (this.uploadedChunkSize = item.size)
-          this.percent = (this.uploadedChunkSize / item.size).toFixed(2) * 1000 / 10
+          this.percent = (this.uploadedChunkSize / this.file_size).toFixed(2) * 1000 / 10
         }
       })
     },
 
     async fileUploadSetup(){
+      this.is_uploading=true
       let that = this
       const data = {
         "file_name":this.fileName,
