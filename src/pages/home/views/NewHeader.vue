@@ -91,6 +91,11 @@ export default {
           tag: "文件中转站",
           link: "/fileBroker",
         },
+        {
+          id: "8",
+          tag: "数据生成器",
+          link: "/dataFaker",
+        },
       ],
       success: [
         {

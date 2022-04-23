@@ -234,7 +234,7 @@ export default {
           this.chunkSize = 2*1024*1024  
         }
         if (200*1024*1024 < file.size <= 500*1024*1024){
-          console.log(">>> chunk size","20MB")
+          console.log(">>> chunk size","2MB")
           this.chunkSize = 2*1024*1024  //太大进度条不能实施反馈
         }
       }

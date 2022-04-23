@@ -52,8 +52,23 @@ import {
     Card,
     Upload,
     Progress,
-    Drawer
+    Drawer,
+    Select,
+    Container,
+    Main,
+    Footer,
+    Header,
+    Aside,
+    Option
 } from 'element-ui';
+
+Vue.use(Option)
+Vue.use(Aside)
+Vue.use(Main)
+Vue.use(Footer)
+Vue.use(Header)
+Vue.use(Container)
+Vue.use(Select)
 Vue.use(Drawer)
 Vue.use(Progress)
 Vue.use(Upload);
