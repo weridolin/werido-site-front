@@ -434,6 +434,7 @@ export default {
           if (res.is_exist){
             console.log(">>>>>>> is already exist !" ,res)
             that.percent = 100
+            that.is_uploading = false
             that.down_code = res.data.download_code
           }else{
             that.file_key = res.key
