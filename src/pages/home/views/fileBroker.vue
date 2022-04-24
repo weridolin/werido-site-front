@@ -314,6 +314,13 @@ export default {
         });
         return
       }
+      if (this.is_uploading){
+        this.$message({
+          message: '当前文件正在上传!请耐心等待',
+          type: 'error'
+        });
+        return
+      }
       this.percent = 0
       this.uploadedChunkSize = 0
       this.fileUploadSetup()
