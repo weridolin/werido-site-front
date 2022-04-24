@@ -39,17 +39,35 @@
                                         :label="condition.alias"
                                         style=" text-align: left"
                                         
-                                    >
-
-                                    <el-input 
-                                        v-model="condition.value" >
-                                    </el-input>
+                                    >   
+                                        <!-- input 输入框 -->
+                                        <el-input v-model="condition.value" v-if="condition.front_type=='input'" ></el-input>
+                                        <!-- 0/1 下拉框选择 -->
+                                        <el-select v-model="condition.value" placeholder="请选择字段类型" v-if="condition.front_type=='bool'" >
+                                            <el-option
+                                                v-for="item in [true,false]"
+                                                :key="item"
+                                                :label="item"
+                                                :value="item"
+                                            >
+                                            </el-option>
+                                        </el-select>    
+                                        <!-- 枚举下拉选择框 -->
+                                        <el-select v-model="condition.value" placeholder="请选择字段类型" v-if="condition.front_type=='select'" >
+                                            <el-option
+                                                v-for="item in condition.select_options"
+                                                :key="item"
+                                                :label="item"
+                                                :value="item"
+                                            >
+                                            </el-option>
+                                        </el-select>                                            
                                     </el-form-item>
                                 </el-col>
                             </el-row>
                         </div>
                         
-                     
+                    
                     </el-col>
                     <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
                         <div class="grid-content bg-purple-light">
@@ -148,22 +166,26 @@ export default {
                     "type":"int",
                     "alias":"整形",
                     "condition":[
-                        {
+                        {   
+                            "front_type":"input",
                             "type":"min",
                             "value":null,
                             "alias":"最小值"
                         }, 
                         {
+                            "front_type":"input",
                             "type":"max",
                             "value":null,
                             "alias":"最大值"
                         },
                         {
+                            "front_type":"bool",
                             "type":"only_positive",
                             "value":null,
                             "alias":"只为正值"
                         },
                         {
+                            "front_type":"bool",
                             "type":"only_negative",
                             "value":null,
                             "alias":"只为负值"
@@ -194,11 +216,13 @@ export default {
                     "alias":"年龄",
                     "condition":[
                         {
+                            "front_type":"input",
                             "type":"min",
                             "value":null,
                             "alias":"最小值"
                         }, 
                         {
+                            "front_type":"input",
                             "type":"max",
                             "value":null,
                             "alias":"最大值"
@@ -215,6 +239,8 @@ export default {
                     "alias":"电话",
                     "condition":[
                         {
+                            "front_type":"select",
+                            "select_options":[111,222,333,444,555,666,777,888,999],
                             "type":"region",
                             "value":null,
                             "alias":"区号"
@@ -230,6 +256,8 @@ export default {
                     "location":"location",
                     "alias":"所在地",
                     "condition":[{
+                            "front_type":"select",
+                            "select_options":[],
                             "type":"options",
                             "value":null,
                             "alias":"枚举值"
@@ -241,16 +269,19 @@ export default {
                     "alias":"金额",
                     "condition":[
                         {
+                            "front_type":"input",
                             "type":"min",
                             "value":null,
                             "alias":"最小值"
                         },
                         {
+                            "front_type":"input",
                             "type":"max",
                             "value":null,
                             "alias":"最大值"
                         },
                         {
+                            "front_type":"input",
                             "type":"precision",
                             "value":null,
                             "alias":"精度"
