@@ -1,9 +1,36 @@
 <template>
 <el-container>
-  <el-aside >Aside</el-aside>
+  <el-aside >
+        <el-form :model="downForm">
+        <el-form-item label="文件下载码" :label-width="formLabelWidth">
+            <el-input v-model="downForm.down_code" autocomplete="off" @input="getFileInfoByDownCode"></el-input>
+        </el-form-item>
+        <el-form-item label="已上传文件" :label-width="formLabelWidth">
+            <el-tag size="small" class="downFile" closable></el-tag>
+        </el-form-item>
+        <el-form-item label="过期时间" :label-width="formLabelWidth">
+            <div class="expire-time"> </div>
+        </el-form-item>
+        </el-form>
+        <div class="demo-drawer__footer">
+        <el-button type="primary" @click="downFile" >下载</el-button>
+        </div>
+
+  </el-aside>
   <el-container>
-    <el-header>Header</el-header>
+    <el-header>
+        <div>
+        <el-alert
+            :closable="false"
+            title="注意:📢📢📢📢📢📢📢📢📢📢📢📢"
+            type="success"
+            center
+            description="只需在下面按自己的需求选择字段和类型,选择对应的生成的数据的条数,后台生成后会返回一个下载码,即可下载对应的数据,默认为CSV格式">
+        </el-alert>
+        </div>
+    </el-header>
     <el-main>
+        
         <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
             <el-form-item
                 v-for="(domain, index) in dynamicValidateForm.items"
@@ -17,7 +44,7 @@
                         <div class="field-type">
                             <el-row :gutter="10">
                                 <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="4">
-                                    <el-select v-model="domain.alias" placeholder="请选择字段类型" @change="selectItem(domain)">
+                                    <el-select v-model="domain.alias" placeholder="请选择是与否" @change="selectItem(domain)">
                                         <el-option
                                             v-for="item in options"
                                             :key="item.alias"
@@ -26,6 +53,12 @@
                                         >
                                         </el-option>
                                     </el-select>
+                                </el-col>
+                                <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="4">
+                                    <el-form-item label="字段名称" style=" text-align: left">
+                                        <el-input v-model="domain.name">
+                                        </el-input>
+                                    </el-form-item>
                                 </el-col>
                                 <el-col 
                                     v-for="condition in domain.condition"
@@ -41,11 +74,12 @@
                                         <!-- input 输入框 -->
                                         <el-input v-model="condition.value" v-if="condition.front_type=='input'" ></el-input>
                                         <!-- 0/1 下拉框选择 -->
-                                        <el-select v-model="condition.value" placeholder="请选择字段类型" v-if="condition.front_type=='bool'" >
+                                        <el-select v-model="condition.value" placeholder="请选择是与否" v-if="condition.front_type=='bool'" >
                                             <el-option
-                                                v-for="(item,index) in [true,false]"
+                                                v-for="(item,index) in ['true','false']"
                                                 :key="index"
-                                                :value="item"
+                                                :label="item"
+                                                :value="index"
                                             >
                                             </el-option>
                                         </el-select>    
@@ -83,17 +117,39 @@
         </el-form>
     </el-main>
     <el-footer>
-        <el-button type="primary" icon="el-icon-search">生成数据</el-button>
-        <el-button type="primary">下载数据<i class="el-icon-upload el-icon--right"></i></el-button>
-        <el-button @click="addDomain">新增</el-button>
-        <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
-        <el-button @click="resetForm('dynamicValidateForm')">全部重置</el-button>
+        <!-- <el-input v-model="dataCount" ></el-input> -->
+        <el-divider></el-divider>
+        <el-row>
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="8">
+            生成的数据条数：
+            <el-input v-model="dataCount" style="width:10%;margin-right:10px"></el-input>
+            <el-button type="primary" icon="el-icon-search">生成数据</el-button>
+            <el-button type="primary">下载数据<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button @click="addDomain">新增</el-button>
+        
+        </el-col>
+        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="16">
+            <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                <div style="text-align:center;">生成数据进度>>></div>
+            </el-col>
+            <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="20">
+                <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success" class="progress"></el-progress>
+            </el-col>
+        </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <!-- <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
+        <el-button @click="resetForm('dynamicValidateForm')">全部重置</el-button> -->
     </el-footer>
   </el-container>
 </el-container>
 </template>
 <style >
 
+.progress{
+    margin-top: 20px;
+
+}
 .condition-input .el-form-item__label{
     width: 80px !important;
     text-align: right !important;
@@ -102,9 +158,15 @@
     margin-left: 80px !important;
 }
 
-  .el-header, .el-footer {
-    background-color: #B3C0D1;
-    color: #333;
+  .el-header{
+    background-color:#f0f9eb;
+    /* color: #333; */
+    /* text-align: center; */
+    /* line-height: 60px; */
+  }
+  .el-footer {
+    /* background-color: #B3C0D1;
+    color: #333; */
     /* text-align: center; */
     line-height: 60px;
   }
@@ -141,11 +203,17 @@ export default {
     name: "dataFaker",
     data() {
         return {
+            formLabelWidth:"120px",
+            downForm:{
+                down_code:""
+            },
+            dataCount:0, //生成数据条数
             dynamicValidateForm: {
                 items: [{
                     id:"",
                     alias:"",
                     type:"",
+                    name:"",
                     condition:[
                         
                     ]
@@ -312,6 +380,7 @@ export default {
                     id:"",
                     alias:"",
                     type:"",
+                    name:"",
                     condition:[
                         
                     ]
@@ -346,6 +415,12 @@ export default {
                 }
             });
             return res
+        },
+        getFileInfoByDownCode(){
+
+        },
+        downFile(){
+
         }
         
     },

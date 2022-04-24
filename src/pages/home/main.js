@@ -59,9 +59,10 @@ import {
     Footer,
     Header,
     Aside,
-    Option
+    Option,
+    Alert
 } from 'element-ui';
-
+Vue.use(Alert)
 Vue.use(Option)
 Vue.use(Aside)
 Vue.use(Main)
