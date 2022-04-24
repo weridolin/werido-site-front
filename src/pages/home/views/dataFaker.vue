@@ -17,7 +17,7 @@
                         <div class="field-type">
                             <el-row :gutter="10">
                                 <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="4">
-                                    <el-select v-model="domain.alias" placeholder="请选择字段类型" @change="selectItem">
+                                    <el-select v-model="domain.alias" placeholder="请选择字段类型" @change="selectItem(domain)">
                                         <el-option
                                             v-for="item in options"
                                             :key="item.alias"
@@ -28,8 +28,7 @@
                                     </el-select>
                                 </el-col>
                                 <el-col 
-                                    
-                                    v-for="condition in getConditionByAlias(domain.alias)"
+                                    v-for="condition in domain.condition"
                                     :key ="condition.alias"
                                     :prop="condition.alias"
                                     :label="condition.alias"
@@ -38,16 +37,14 @@
                                         class="condition-input" 
                                         :label="condition.alias"
                                         style=" text-align: left"
-                                        
                                     >   
                                         <!-- input 输入框 -->
                                         <el-input v-model="condition.value" v-if="condition.front_type=='input'" ></el-input>
                                         <!-- 0/1 下拉框选择 -->
                                         <el-select v-model="condition.value" placeholder="请选择字段类型" v-if="condition.front_type=='bool'" >
                                             <el-option
-                                                v-for="item in [true,false]"
-                                                :key="item"
-                                                :label="item"
+                                                v-for="(item,index) in [true,false]"
+                                                :key="index"
                                                 :value="item"
                                             >
                                             </el-option>
@@ -82,12 +79,6 @@
                     </el-col> -->
                     <!-- <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="4"><div class="grid-content bg-purple-light"></div></el-col> -->
                 </el-row>
-            <!-- </el-form-item> -->
-
-            <!-- <el-form-item> -->
-                <!-- <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
-                <el-button @click="addDomain">新增域名</el-button>
-                <el-button @click="resetForm('dynamicValidateForm')">重置</el-button> -->
             </el-form-item>
         </el-form>
     </el-main>
@@ -257,7 +248,7 @@ export default {
                     "alias":"所在地",
                     "condition":[{
                             "front_type":"select",
-                            "select_options":[],
+                            "select_options":[1,2,3,4,5,6,7],
                             "type":"options",
                             "value":null,
                             "alias":"枚举值"
@@ -326,14 +317,31 @@ export default {
                     ]
                 });
         },
-        selectItem(type){
-            console.log(">>>>>>>>>select item",type,this.dynamicValidateForm)
+        selectItem(domain){
+            let condition = this.getConditionByAlias(domain)
+            domain.condition = this.deepClone(condition);            
+            console.log(">>>>>>>>>select item,generate and add condition",this.dynamicValidateForm)
         },
-        getConditionByAlias(alias){
+        deepClone(obj){ 
+            //深拷贝
+            let objClone =  Array.isArray(obj) ? [] : {};
+            if (obj && typeof obj === 'object') {
+            for(let key in obj){
+                if (obj[key] && typeof obj[key] === 'object'){
+                    objClone[key] = this.deepClone(obj[key]);
+                }else{
+                    objClone[key] = obj[key]
+                }
+            }
+            }
+            return objClone;
+        },
+        getConditionByAlias(domain){
             let res =[]
             this.options.forEach(element => {
-                if (element.alias==alias){
+                if (element.alias==domain.alias){
                     console.log(">>get condition",element.condition)
+                    // domain.condition = domain.condition.concat(element.condition)
                     res = element.condition
                 }
             });
@@ -342,6 +350,9 @@ export default {
         
     },
     watch:{
+        "dynamicValidateForm.items"(){
+            console.log(">>>>>>>>>>>>>>>>> changeeeeeeee")
+        }
     }
 }
 </script>
