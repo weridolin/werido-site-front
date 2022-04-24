@@ -534,7 +534,15 @@ export default {
         time = "" + parseInt(hourTime) + "小时" + time;
       }
       return time;
-    }
+    },
+    beforeunloadHandler (e) {
+      window.confirm('刷新後当前页面的数据會丟失，确定要刷新？')
+      e = e || window.event
+      if (e) {
+        e.returnValue = '关闭提示'
+      }
+      return '关闭提示'
+    } 
   },
   props:{
   },
@@ -546,6 +554,12 @@ export default {
         //PC端
       this.drawerSize="50%"
     }
-  }
+  },
+  mounted(){
+    window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
+  },
+  destroyed () {
+    window.removeEventListener('beforeunload', e => this.beforeunloadHandler(e))
+  },
 };
 </script>
