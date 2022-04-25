@@ -120,7 +120,7 @@
         <!-- <el-input v-model="dataCount" ></el-input> -->
         <el-divider></el-divider>
         <el-row>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="8">
+        <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
             生成的数据条数：
             <el-input v-model="dataCount" style="width:10%;margin-right:10px"></el-input>
             <el-button type="primary" icon="el-icon-search">生成数据</el-button>
@@ -128,11 +128,11 @@
             <el-button @click="addDomain">新增</el-button>
         
         </el-col>
-        <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="16">
-            <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-                <div style="text-align:center;">生成数据进度>>></div>
+        <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+            <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+                <span style="text-align:right;">生成数据进度➡️➡️</span>
             </el-col>
-            <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="20">
+            <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
                 <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success" class="progress"></el-progress>
             </el-col>
         </el-col>
@@ -147,7 +147,7 @@
 <style >
 
 .progress{
-    margin-top: 20px;
+    margin-top: 18px;
 
 }
 .condition-input .el-form-item__label{
@@ -355,6 +355,18 @@ export default {
 
     }
     },
+    created(){
+        if(window.screen.availWidth<768){
+        //移动端
+            this.$message({
+                message: '检测到当年使用的设备为移动端.由于没有时间和精力去做样式适配,可能会影响体验,请在PC端使用!',
+                type: 'error'
+            });
+        return
+        }else{
+
+        }
+    },
     methods: {
         submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -376,7 +388,7 @@ export default {
         }
         },
         addDomain() {
-        this.dynamicValidateForm.items.push({
+            this.dynamicValidateForm.items.push({
                     id:"",
                     alias:"",
                     type:"",
@@ -425,9 +437,9 @@ export default {
         
     },
     watch:{
-        "dynamicValidateForm.items"(){
-            console.log(">>>>>>>>>>>>>>>>> changeeeeeeee")
-        }
+        // "dynamicValidateForm.items"(){
+        //     console.log(">>>>>>>>>>>>>>>>> changeeeeeeee")
+        // }
     }
 }
 </script>
