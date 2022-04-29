@@ -403,6 +403,7 @@ export default {
             if (process.env.NODE_ENV == "production"){
                 ws_url == "ws://www.weridolin.cn"  // another way
             }
+            console.log(">>>>>>>>ws url",this.ws_url)
             this.ws_conn = new WebSocket(`${ws_url}/ws/dataFaker/${this.key}`)
             this.ws_conn.onmessage = function(event) {
                 console.log("get message from ws server >>>",event.data);
