@@ -397,7 +397,8 @@ export default {
     methods: {
         build_conn(){
             let that = this
-            this.ws_conn = new WebSocket(`ws://127.0.0.1:8000/ws/dataFaker/${this.key}`)
+            this.ws_conn = new WebSocket(`${process.env.WS_CONNECT_URL}/ws/dataFaker/${this.key}`)
+
             this.ws_conn.onmessage = function(event) {
                 console.log("get message from ws server >>>",event.data);
                 that.handleWsData(event.data)
