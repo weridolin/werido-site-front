@@ -377,7 +377,8 @@ export default {
                 loading:false,
                 loadingText:"正在获取文件下载码",
                 is_generating:false //是否正在生成数据
-            }
+            },
+            ws_url:null
     }
     },
     created(){
@@ -392,13 +393,17 @@ export default {
 
         }
         // this.initInfo()
+        console.log(">>>>",process.env,process.env.WS_CONNECT_URL)
 
     },
     methods: {
         build_conn(){
             let that = this
-            this.ws_conn = new WebSocket(`${process.env.WS_CONNECT_URL}/ws/dataFaker/${this.key}`)
-
+            let ws_url = "ws://127.0.0.1:8000"
+            if (process.env ==production){
+                ws_url == "ws://www.weridolin.cn"  // another way
+            }
+            this.ws_conn = new WebSocket(`${ws_url}/ws/dataFaker/${this.key}`)
             this.ws_conn.onmessage = function(event) {
                 console.log("get message from ws server >>>",event.data);
                 that.handleWsData(event.data)
@@ -418,7 +423,6 @@ export default {
                 console.log("an error raise an in ws")
             }
         },
-
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
