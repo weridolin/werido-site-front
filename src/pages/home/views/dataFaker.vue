@@ -400,7 +400,7 @@ export default {
         build_conn(){
             let that = this
             let ws_url = "ws://127.0.0.1:8000"
-            if (process.env ==production){
+            if (process.env == "production"){
                 ws_url == "ws://www.weridolin.cn"  // another way
             }
             this.ws_conn = new WebSocket(`${ws_url}/ws/dataFaker/${this.key}`)
