@@ -480,22 +480,10 @@ export default {
       }
       let that = this
       const downCode = this.downForm.down_code
-      // console.log(">>>>>> begin to down load file",downCode)
-      // this.$get(`/api/v1/fileBroker?down_code=${downCode}`,{responseType: 'blob'}).then((blobContent)=>{        
-      //   let a = document.createElement('a')
-      //   a.download =  that.downForm.down_fileName
-      //   a.style.display = 'none'
-      //   let url = URL.createObjectURL(blobContent)
-      //   a.href = url
-      //   document.body.appendChild(a)
-      //   a.click()
-      //   URL.revokeObjectURL(url) // 销毁
-      //   document.body.removeChild(a)
-      // })
       const el = document.createElement('a');
       el.style.display = 'none';
       el.setAttribute('target', '_blank');
-     /**
+    /**
        * download的属性是HTML5新增的属性
        * href属性的地址必须是非跨域的地址，如果引用的是第三方的网站或者说是前后端分离的项目(调用后台的接口)，这时download就会不起作用。
        * 此时，如果是下载浏览器无法解析的文件，例如.exe,.xlsx..那么浏览器会自动下载，但是如果使用浏览器可以解析的文件，比如.txt,.png,.pdf....浏览器就会采取预览模式

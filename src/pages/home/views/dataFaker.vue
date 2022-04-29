@@ -1,6 +1,10 @@
 <template>
-<el-container>
-  <el-aside >
+<el-container   
+    v-loading="state.loading"
+    :element-loading-text="state.loadingText"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"  >>
+    <el-aside> 
         <el-form :model="downForm">
         <el-form-item label="文件下载码" :label-width="formLabelWidth">
             <el-input v-model="downForm.down_code" autocomplete="off" @input="getFileInfoByDownCode"></el-input>
@@ -16,8 +20,8 @@
         <el-button type="primary" @click="downFile" >下载</el-button>
         </div>
 
-  </el-aside>
-  <el-container>
+    </el-aside>
+    <el-container>
     <el-header>
         <div>
         <el-alert
@@ -30,7 +34,6 @@
         </div>
     </el-header>
     <el-main>
-        
         <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
             <el-form-item
                 v-for="(domain, index) in dynamicValidateForm.items"
@@ -106,12 +109,6 @@
                             <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
                         </div>
                     </el-col>
-                    <!-- <el-col :xs="4" :sm="6" :md="8" :lg="4" :xl="4">
-                        <div class="grid-content bg-purple">
-                            <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
-                        </div>
-                    </el-col> -->
-                    <!-- <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="4"><div class="grid-content bg-purple-light"></div></el-col> -->
                 </el-row>
             </el-form-item>
         </el-form>
@@ -123,8 +120,8 @@
         <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
             生成的数据条数：
             <el-input v-model="dataCount" style="width:10%;margin-right:10px"></el-input>
-            <el-button type="primary" icon="el-icon-search">生成数据</el-button>
-            <el-button type="primary">下载数据<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button type="primary" icon="el-icon-search" @click="initInfo">生成数据</el-button>
+            <!-- <el-button type="primary">下载数据<i class="el-icon-upload el-icon--right"></i></el-button> -->
             <el-button @click="addDomain">新增</el-button>
         
         </el-col>
@@ -133,7 +130,7 @@
                 <span style="text-align:right;">生成数据进度➡️➡️</span>
             </el-col>
             <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
-                <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success" class="progress"></el-progress>
+                <el-progress :text-inside="true" :stroke-width="24" :percentage="progress_percent" status="success" class="progress"></el-progress>
             </el-col>
         </el-col>
         </el-row>
@@ -207,7 +204,7 @@ export default {
             downForm:{
                 down_code:""
             },
-            dataCount:0, //生成数据条数
+            dataCount:100, //生成数据条数
             dynamicValidateForm: {
                 items: [{
                     id:"",
@@ -224,6 +221,8 @@ export default {
                 {
                     "type":"int",
                     "alias":"整形",
+                    "name":"整形字段1",
+                    "generator":"IntGenerator",
                     "condition":[
                         {   
                             "front_type":"input",
@@ -253,26 +252,35 @@ export default {
                 {
                     "type":"mail",
                     "alias":"邮箱",
+                    "name":"邮箱字段1",
+                    "generator":"MailGenerator",
                             "condition":[]
                 },
                 {
                     "type":"IP4",
                     "alias":"IP4",
+                    "name":"IP4字段1",
+                    "generator":"IP4Generator",
                     "condition":[]
                 },
                 {
                     "type":"IP6",
                     "alias":"IP6",
+                    "name":"IP6字段1",
+                    "generator":"IP6Generator",
                     "condition":[]
                 },
                 {
                     "type":"address",
                     "alias":"地址",
+                    "name":"地址字段1",
+                    "generator":"AddressGenerator",
                     "condition":[]
                 },
                 {
                     "type":"age",
                     "alias":"年龄",
+                    "generator":"AgeGenerator",
                     "condition":[
                         {
                             "front_type":"input",
@@ -290,16 +298,20 @@ export default {
                 },
                 {
                     "type":"gender",
+                    "name":"性别字段1",
+                    "generator":"GenderGenerator",
                     "condition":[],
                     "alias":"性别"
                 },
                 {   
                     "type":"phone",
                     "alias":"电话",
+                    "name":"电话字段1",
+                    "generator":"PhoneNumberGenerator",
                     "condition":[
                         {
                             "front_type":"select",
-                            "select_options":[111,222,333,444,555,666,777,888,999],
+                            "select_options":[],
                             "type":"region",
                             "value":null,
                             "alias":"区号"
@@ -308,15 +320,19 @@ export default {
                 },
                 {
                     "type":"telephone",
+                    "name":"手机电话字段1",
+                    "generator":"TelePhoneGenerator",
                     "alias":"手机电话号码",
                     "condition":[]
                 },
                 {
                     "location":"location",
+                    "name":"所在地字段1",
+                    "generator":"LocationGenerator",
                     "alias":"所在地",
                     "condition":[{
                             "front_type":"select",
-                            "select_options":[1,2,3,4,5,6,7],
+                            "select_options":[],
                             "type":"options",
                             "value":null,
                             "alias":"枚举值"
@@ -325,6 +341,8 @@ export default {
                 },
                 {   
                     "type":"pay",
+                    "name":"金额字段1",
+                    "generator":"PayGenerator",
                     "alias":"金额",
                     "condition":[
                         {
@@ -351,8 +369,15 @@ export default {
             temp:{ //用于存放暂时选择的字段类型
                 type:null,
                 // condition:null,
+            },
+            key:"Test", //POST请求后得到的KEY
+            ws_conn:null,
+            progress_percent:0,
+            state:{
+                loading:false,
+                loadingText:"正在获取文件下载码",
+                is_generating:false //是否正在生成数据
             }
-
     }
     },
     created(){
@@ -366,26 +391,51 @@ export default {
         }else{
 
         }
+        // this.initInfo()
+
     },
     methods: {
-        submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-            if (valid) {
-            alert('submit!');
-            } else {
-            console.log('error submit!!');
-            return false;
+        build_conn(){
+            let that = this
+            this.ws_conn = new WebSocket(`ws://127.0.0.1:8000/ws/dataFaker/${this.key}`)
+            this.ws_conn.onmessage = function(event) {
+                console.log("get message from ws server >>>",event.data);
+                that.handleWsData(event.data)
             }
+            this.ws_conn.onopen = function(event) {
+                console.log("ws successfully connect to server")
+                const payload = {
+                    "type":1,
+                    "record_key":that.key
+                }
+                console.log(">>> ws send message",payload)
+                that.ws_conn.send(JSON.stringify(payload))
+            }
+            this.ws_conn.onerror = function(event){
+                that.state.is_generating=false
+                console.log("ws on error",event)
+                console.log("an error raise an in ws")
+            }
+        },
+
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                alert('submit!');
+                } else {
+                console.log('error submit!!');
+                return false;
+                }
         });
         },
         resetForm(formName) {
-        this.$refs[formName].resetFields();
+            this.$refs[formName].resetFields();
         },
         removeDomain(item) {
-        var index = this.dynamicValidateForm.items.indexOf(item)
-        if (index !== -1) {
-            this.dynamicValidateForm.items.splice(index, 1)
-        }
+            var index = this.dynamicValidateForm.items.indexOf(item)
+            if (index !== -1) {
+                this.dynamicValidateForm.items.splice(index, 1)
+            }
         },
         addDomain() {
             this.dynamicValidateForm.items.push({
@@ -393,6 +443,7 @@ export default {
                     alias:"",
                     type:"",
                     name:"",
+                    generator:"",
                     condition:[
                         
                     ]
@@ -400,7 +451,8 @@ export default {
         },
         selectItem(domain){
             let condition = this.getConditionByAlias(domain)
-            domain.condition = this.deepClone(condition);            
+            domain.condition = this.deepClone(condition);  
+            domain.generator = this.getGeneratorByAlias(domain)
             console.log(">>>>>>>>>select item,generate and add condition",this.dynamicValidateForm)
         },
         deepClone(obj){ 
@@ -428,18 +480,160 @@ export default {
             });
             return res
         },
+        getGeneratorByAlias(domain){
+            let res = null
+            this.options.forEach(element => {
+                if (element.alias==domain.alias){
+                    console.log(">>get generator",element.generator)
+                    // domain.condition = domain.condition.concat(element.condition)
+                    res = element.generator
+                }
+            });
+            return res
+        },
         getFileInfoByDownCode(){
-
+            if(this.downForm.down_code.length==6){
+                let that = this
+                this.$get("/api/v1/dataFaker/search/"+this.downForm.down_code)
+                    .then(function (res) {
+                    console.log(res,"GET FAKER FILE INFO BY DOWN CODE",res);
+                    if (res.data.length == 1){
+                        // console.log(document.querySelector(".downFile"))
+                        document.querySelector(".downFile").textContent = `${res.data[0].record_key}.csv`
+                        document.querySelector(".expire-time").textContent = that.compute(res.data[0].timedelta)+ "  后过期"
+                        // that.downForm.down_fileName = `res.data[0].file_name`
+                        }
+                    })
+                    .catch(function (error) {
+                    console.log(">>>",error)
+                    });
+                } else{
+                document.querySelector(".downFile").textContent = ""
+                document.querySelector(".expire-time").textContent=""
+                // this.downForm.down_fileName = ""
+                }
+        },
+        initInfo(){
+            if (this.state.is_generating){
+                this.$message({
+                message: '当前有数据生在生成,请耐心等待其生成完成!',
+                type: 'error'
+                });
+                return
+            }
+            let that = this
+            const data = {
+                "fields":this.dynamicValidateForm.items,
+                "count":this.dataCount
+            }  
+            this.$post("/api/v1/dataFaker",data)
+            .then(function (res) {
+                //  {
+                // "key": "879baf8bbdee4f06adbc7c3cbb9581c9",
+                // "is_exist": false
+                // }
+                console.log(res,"GET FILE UPLOAD INFO");
+                if (res.is_exist){
+                    console.log(">>> is already exist!" ,res)
+                }else{
+                    that.key = res.key    
+                    that.build_conn() 
+                    that.startGenerateFakeData()
+                }
+            })
+            .catch(function (error) {
+                console.log(">>> init data faker info error",error)
+            });
+        },
+        startGenerateFakeData(){
+            const payload = {
+                "type":1,
+                "record_key":this.key
+            }
+            console.log(">>> ws send message",payload)
+            this.ws_conn.send(JSON.stringify(payload))
         },
         downFile(){
-
-        }
+            if( this.downForm.down_code==""||this.downForm.down_code==null || this.downForm.down_code.length!=6){
+            this.$message({
+                message: '授权码非法',
+                type: 'error'
+            });
+            return
+            }
+            let that = this
+            const downCode = this.downForm.down_code
+            const el = document.createElement('a');
+            el.style.display = 'none';
+            el.setAttribute('target', '_blank');
+        /**
+             * download的属性是HTML5新增的属性
+             * href属性的地址必须是非跨域的地址，如果引用的是第三方的网站或者说是前后端分离的项目(调用后台的接口)，这时download就会不起作用。
+             * 此时，如果是下载浏览器无法解析的文件，例如.exe,.xlsx..那么浏览器会自动下载，但是如果使用浏览器可以解析的文件，比如.txt,.png,.pdf....浏览器就会采取预览模式
+             * 所以，对于.txt,.png,.pdf等的预览功能我们就可以直接不设置download属性(前提是后端响应头的Content-Type: application/octet-stream，如果为application/pdf浏览器则会判断文件为 pdf ，自动执行预览的策略)
+             */  
+            that.downForm.down_fileName && el.setAttribute('download', that.downForm.down_fileName);
+            el.href =`${process.env.VUE_APP_API_URL}/api/v1/dataFaker?download_code=${downCode}`;
+            console.log(el);
+            document.body.appendChild(el);
+            el.click();
+            document.body.removeChild(el);
+        },
+        handleWsData(data){
+                // start = 1
+                // stop = 2
+                // progress = 3
+                // finish = 4
+                // error = 5
+            const _data = JSON.parse(data)
+            switch (_data.type) {
+                case 3:
+                    { 
+                        this.progress_percent = _data.data.progress
+                        this.state.is_generating = true
+                        break
+                    };
+                case 4:
+                    {   
+                        this.state.is_generating = false
+                        this.downForm.down_code = _data.download_code
+                        this.getFileInfoByDownCode()
+                        break
+                    };
+                default:
+                    break;
+            }
+        },
+        compute(timestamps){
+            var secondTime = parseInt(timestamps);// 秒
+            var minuteTime = 0;// 分
+            var hourTime = 0;// 小时
+            if(secondTime > 60) {//如果秒数大于60，将秒数转换成整数
+                //获取分钟，除以60取整数，得到整数分钟
+                minuteTime = parseInt(secondTime / 60);
+                //获取秒数，秒数取佘，得到整数秒数
+                secondTime = parseInt(secondTime % 60);
+                //如果分钟大于60，将分钟转换成小时
+                if(minuteTime > 60) {
+                    //获取小时，获取分钟除以60，得到整数小时
+                    hourTime = parseInt(minuteTime / 60);
+                    //获取小时后取佘的分，获取分钟除以60取佘的分
+                    minuteTime = parseInt(minuteTime % 60);
+                }
+            }
+            var time = "" + parseInt(secondTime) + "秒";
+            if(minuteTime > 0) {
+            time = "" + parseInt(minuteTime) + "分" + time;
+            }
+            if(hourTime > 0) {
+            time = "" + parseInt(hourTime) + "小时" + time;
+            }
+            return time;
+        },
         
     },
     watch:{
-        // "dynamicValidateForm.items"(){
-        //     console.log(">>>>>>>>>>>>>>>>> changeeeeeeee")
-        // }
+        
     }
 }
 </script>
