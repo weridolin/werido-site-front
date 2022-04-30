@@ -1,27 +1,40 @@
 <template>
+<div  id="clouds">
 <el-container   
     v-loading="state.loading"
     :element-loading-text="state.loadingText"
     element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"  >>
+    element-loading-background="rgba(0, 0, 0, 0.8)"  
+    >
     <el-aside> 
-        <el-form :model="downForm">
-        <el-form-item label="文件下载码" :label-width="formLabelWidth">
-            <el-input v-model="downForm.down_code" autocomplete="off" @input="getFileInfoByDownCode"></el-input>
-        </el-form-item>
-        <el-form-item label="已上传文件" :label-width="formLabelWidth">
-            <el-tag size="small" class="downFile" closable></el-tag>
-        </el-form-item>
-        <el-form-item label="过期时间" :label-width="formLabelWidth">
-            <div class="expire-time"> </div>
-        </el-form-item>
-        </el-form>
-        <div class="demo-drawer__footer">
-        <el-button type="primary" @click="downFile" >下载</el-button>
+        <plane> </plane>
+        <div class="downForm">
+            <el-form :model="downForm" class="downForm" >
+            <el-form-item>
+            <el-alert
+                title="📢📢📢:输入下载码即可下载 ⬇️"
+                type="info"
+                effect="dark"
+                :closable="false">
+            </el-alert>
+            </el-form-item>
+            <el-form-item label="文件下载码" :label-width="formLabelWidth">
+                <el-input v-model="downForm.down_code" autocomplete="off" @input="getFileInfoByDownCode" style="width:50%"></el-input>
+            </el-form-item>
+            <el-form-item label="已上传文件" :label-width="formLabelWidth">
+                <el-tag size="small" class="downFile" closable></el-tag>
+            </el-form-item>
+            <el-form-item label="过期时间" :label-width="formLabelWidth">
+                <div class="expire-time"> </div>
+            </el-form-item>
+            
+            <el-form-item>
+                <el-button type="primary" @click="downFile" style="width:50%;" class="downButton" >下载</el-button>
+            </el-form-item>
+            </el-form>
         </div>
-
     </el-aside>
-    <el-container>
+    <el-container  class="mainForm">
     <el-header>
         <div>
         <el-alert
@@ -106,7 +119,7 @@
                     <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
                         <div class="grid-content bg-purple-light">
                             <el-button @click.prevent="removeDomain(domain)">删除</el-button>
-                            <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
+                            <el-button @click="resetForm(domain)">重置</el-button>
                         </div>
                     </el-col>
                 </el-row>
@@ -117,21 +130,21 @@
         <!-- <el-input v-model="dataCount" ></el-input> -->
         <el-divider></el-divider>
         <el-row>
-        <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10">
             生成的数据条数：
-            <el-input v-model="dataCount" style="width:10%;margin-right:10px"></el-input>
+            <el-input v-model="dataCount" style="width:20%;margin-right:10px"></el-input>
             <el-button type="primary" icon="el-icon-search" @click="initInfo">生成数据</el-button>
             <!-- <el-button type="primary">下载数据<i class="el-icon-upload el-icon--right"></i></el-button> -->
             <el-button @click="addDomain">新增</el-button>
         
         </el-col>
-        <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12">
-            <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-                <span style="text-align:right;">生成数据进度➡️➡️</span>
+        <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="14">
+            <!-- <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
+                <span style="text-align:left;">生成数据进度➡️➡️</span>
             </el-col>
-            <el-col :xs="18" :sm="18" :md="18" :lg="18" :xl="18">
+            <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20"> -->
                 <el-progress :text-inside="true" :stroke-width="24" :percentage="progress_percent" status="success" class="progress"></el-progress>
-            </el-col>
+            <!-- </el-col> -->
         </el-col>
         </el-row>
         <el-divider></el-divider>
@@ -140,13 +153,49 @@
     </el-footer>
   </el-container>
 </el-container>
+
+<div id="clouds">
+	<div class="cloud1 x1"></div>
+	<!-- Time for multiple clouds to dance around -->
+	<div class="cloud1 x2"></div>
+	<div class="cloud1 x3"></div>
+	<div class="cloud1 x4"></div>
+	<div class="cloud1 x5"></div>
+</div>
+<!-- <a style="position: fixed; bottom: 10px; right: 10px;color:#CCC" href="https://plus.google.com/111052275277622928148?rel=me">Google+</a> -->
+</div>
 </template>
 <style >
+
+.el-main {
+    margin-top: 1%;
+}
 
 .progress{
     margin-top: 18px;
 
 }
+body {
+  height: 100%;
+}
+
+#app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    height: 100%;
+}
+
+.bg {
+    background-image: url('~@/assets/cloud.png');
+    background-repeat:no-repeat;
+    background-position:0% 0%;
+    background-size:cover;  
+    /* position: absolute; */
+    height: 100%;
+}
+
 .condition-input .el-form-item__label{
     width: 80px !important;
     text-align: right !important;
@@ -168,36 +217,159 @@
     line-height: 60px;
   }
   
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
+  .downForm {
+    margin-top:50%;
+    /* background-color: #B3C0D1; */
+  }
+
+  .el-aside   {
+    /* background-color:#13101000 */
+    /* background-image: url('~@/assets/cloud.jpg'); */
+  
+  }
+
+  .downButton{
+    text-align: center; 
+    margin-left: 20%;
   }
   
   .el-main {
-    background-color: #E9EEF3;
-    color: #333;
+    /* background-color: #E9EEF3; */
+    /* color: #333; */
     /* text-align: center; */
     line-height: 160px;
+    height: 100%;
+    
   }
   
-  body > .el-container {
-    margin-bottom: 40px;
-  }
-  
-  .el-container:nth-child(5) .el-aside,
-  .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
-  }
-  
-  .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
-  }
+
+/*                                动态云朵                   */
+#clouds{
+	padding: 10px 0;
+	background: #c9dbe9;
+	background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+	background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
+	background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+    height: 100%;
+}
+
+/*Time to finalise the cloud shape*/
+.cloud1 {
+	width: 200px; height: 60px;
+	background: #fff;
+	
+	border-radius: 200px;
+	-moz-border-radius: 200px;
+	-webkit-border-radius: 200px;
+	
+	position: relative; 
+}
+
+.cloud1:before, .cloud1:after {
+	content: '';
+	position: absolute; 
+	background: #fff;
+	width: 100px; height: 80px;
+	position: absolute; top: -15px; left: 10px;
+	
+	border-radius: 100px;
+	-moz-border-radius: 100px;
+	-webkit-border-radius: 100px;
+	
+	-webkit-transform: rotate(30deg);
+	transform: rotate(30deg);
+	-moz-transform: rotate(30deg);
+}
+
+.cloud1:after {
+	width: 120px; height: 120px;
+	top: -55px; left: auto; right: 15px;
+}
+
+/*Time to animate*/
+.x1 {
+	-webkit-animation: moveclouds 15s linear infinite;
+	-moz-animation: moveclouds 15s linear infinite;
+	-o-animation: moveclouds 15s linear infinite;
+}
+
+/*variable speed, opacity, and position of clouds for realistic effect*/
+.x2 {
+	left: 200px;
+	
+	-webkit-transform: scale(0.6);
+	-moz-transform: scale(0.6);
+	transform: scale(0.6);
+	opacity: 0.6; /*opacity proportional to the size*/
+	
+	/*Speed will also be proportional to the size and opacity*/
+	/*More the speed. Less the time in 's' = seconds*/
+	-webkit-animation: moveclouds 25s linear infinite;
+	-moz-animation: moveclouds 25s linear infinite;
+	-o-animation: moveclouds 25s linear infinite;
+}
+
+.x3 {
+	left: -250px; top: -200px;
+	
+	-webkit-transform: scale(0.8);
+	-moz-transform: scale(0.8);
+	transform: scale(0.8);
+	opacity: 0.8; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+
+.x4 {
+	left: 470px; top: -250px;
+	
+	-webkit-transform: scale(0.75);
+	-moz-transform: scale(0.75);
+	transform: scale(0.75);
+	opacity: 0.75; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 18s linear infinite;
+	-moz-animation: moveclouds 18s linear infinite;
+	-o-animation: moveclouds 18s linear infinite;
+}
+
+.x5 {
+	left: -150px; top: -150px;
+	
+	-webkit-transform: scale(0.8);
+	-moz-transform: scale(0.8);
+	transform: scale(0.8);
+	opacity: 0.8; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+
+@-webkit-keyframes moveclouds {
+	0% {margin-left: 1000px;}
+	100% {margin-left: -1000px;}
+}
+@-moz-keyframes moveclouds {
+	0% {margin-left: 1000px;}
+	100% {margin-left: -1000px;}
+}
+@-o-keyframes moveclouds {
+	0% {margin-left: 1000px;}
+	100% {margin-left: -1000px;}
+}
+
 </style>
 <script>
+import Plane from '../components/plane.vue';
+// import Plane from "./../components/plane";
 export default {
     name: "dataFaker",
+    components:{
+        Plane
+    },
     data() {
         return {
             formLabelWidth:"120px",
@@ -435,8 +607,15 @@ export default {
                 }
         });
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
+        resetForm(domain) {
+            // this.$refs[formName].resetFields();
+            console.log("reset form fields",domain)
+            domain.name = ""
+            domain.alias = ""
+            domain.condition = []
+            // domain.condition.forEach(condition => {
+            //     condition.value=""
+            // });
         },
         removeDomain(item) {
             var index = this.dynamicValidateForm.items.indexOf(item)
