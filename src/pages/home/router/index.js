@@ -30,6 +30,8 @@ const fileBroker =()=>
     import ('../views/fileBroker.vue')
 const dataFaker =()=>
     import ('../views/dataFaker.vue')
+const alinLab=()=>
+    import ('../views/alinlab.vue')
 
 Vue.use(VueRouter)
 const name = "werido"
@@ -123,6 +125,7 @@ const routes = [{
     //         nav: nav1
     //     }
     // },
+
     {
         path: '/link',
         name: 'Link',
@@ -141,6 +144,17 @@ const routes = [{
         component: fileBroker,
         meta: {
             title: '文件慢传',
+            nav: nav,
+            footer:false,
+            header:false
+        }
+    },
+    {
+        path: '/alinLab',
+        name: 'alinLab',
+        component: alinLab,
+        meta: {
+            title: 'alin-lab',
             nav: nav,
             footer:false,
             header:false

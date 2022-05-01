@@ -109,8 +109,8 @@ export default {
     return {
       index: 0, //播放列表
       muIsShow: false, //是否显示
-      isPlay: true, //是否播放
-      canplay: true, //是否能播放
+      isPlay: false, //是否播放
+      canplay: false, //是否能播放
       loading: true, //是否自动播放
       cycle: 2,//0播放一次 1单曲循环 2列表循环
       numb: 0,
@@ -120,6 +120,7 @@ export default {
       audio: "",
       musicInfo: {},
       isList: false,
+      checker:null,
       musics: [
         {
           music_id: "34341360",
@@ -131,6 +132,20 @@ export default {
     };
   },
   methods: {
+      // 点击才播放音乐
+    toggleSound() {
+      // console.log(">>>>>>>>>><<<<<<<<<<<<<<")
+      // var music = this.audio;//获取ID
+      // if (music.paused) { //判读是否播放
+      //     music.play(); //没有就播放
+          
+      // }
+      // if (this.isPlay){
+      //   // console.log(">>> stop checker")
+      //   // clearInterval(this.checker)
+      // } 
+
+      },
     // 打开和关闭音乐收缩栏
     MuBtnClick() {
       this.muIsShow = !this.muIsShow;
@@ -211,33 +226,6 @@ export default {
           url: this.musics[this.index].url,
         };
         this.audio.src=that.musics[that.index].url;
-        // this.$post(
-        //   "/music",
-        //   qs.stringify({
-        //     input: that.musics[that.index].music_id,
-        //     filter: "id",
-        //     type: that.musics[that.index].type,
-        //     page: 1,
-        //   })
-        // )
-        //   .then(function (res) {
-        //     console.log("get music result",res.data)
-        //     res.data[0].url = res.data[0].url.replace(
-        //       /^http:\/\//i,
-        //       "https://"
-        //     );
-        //     res.data[0].pic = res.data[0].pic.replace(
-        //       /^http:\/\//i,
-        //       "https://"
-        //     );
-        //     that.musics[that.index].musicInfo = res.data[0];
-        //     that.musicInfo = res.data[0];
-        //     // that.audio.src = that.musicInfo.url;
-        //   })
-        //   .catch(function (error) {
-            // that.audio.pause(); // 暂停
-            // that.isPlay = false;
-          // });
       } else {
         this.musicInfo = {
           title: this.musics[this.index].title,
@@ -263,9 +251,10 @@ export default {
           }
           that.length = that.musics.length;
           console.log(">>> get music",res.data,that.length)
-          // that.getMusic();
         })
-        .catch(function (error) {});
+        .catch(function (error) {
+          console.log(">>> ger music error",error)
+        });
     },
     mError() {
       if (this.loading) {
@@ -284,7 +273,6 @@ export default {
     mCanplay() {
       this.canplay = true;
       if (this.loading) {
-
         this.audio.play(); // 播放
         this.isPlay = true;
       }
@@ -329,14 +317,18 @@ export default {
   created() {
     // this.audio=document.getElementById('music')
     this.audio = document.createElement("audio");
-    this.audio.muted = true;
+    this.audio.muted = false;
     this.getList();   
     let that = this;
     this.audio.addEventListener("canplay", that.mCanplay, false),
     this.audio.addEventListener("timeupdate", that.mTimeUpdate, false);
     this.audio.addEventListener("ended", that.mEnded, false);
     this.audio.addEventListener("error", that.mError, false);
-    console.log(">>create autio finish",this.audio)
+    console.log(">> create auto finish",this.audio)
+    this.pause()
+
+    //监听点击事件，点击则播放音乐
+    // this.checker=setInterval(this.toggleSound,2);
   },
   watch: {
     index(val) {

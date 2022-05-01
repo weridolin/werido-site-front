@@ -178,7 +178,7 @@ h3 {
 /*--- 三级标题左边的小圆点 ---*/
 
 h3:before {
-    content: '#';
+    /* content: '#'; */
     color: var(--main-5);
     margin-bottom: 0.18em;
     margin-right: 6px;

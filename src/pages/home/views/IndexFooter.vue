@@ -4,10 +4,10 @@
       <div class="foot-row service">
         <p class="title">own to werido,仅供学习用，侵权请告知</p>
         <ul class="link">
-          <li><router-link to="/drug">毒</router-link></li>
+          <li><router-link to="/alinLab">疯狂实验室</router-link></li>
           <li><router-link to="/link">友链</router-link></li>
           <li><router-link to="/message">留言</router-link></li>
-          <li><router-link to="/blog">博客</router-link></li>
+          <li><XRouteLink to="https://weridolin.github.io/#/">博客</XRouteLink></li>
           <li><router-link to="/">主页</router-link></li>
           <li><router-link to="/">💡💡</router-link></li>
         </ul>
@@ -70,8 +70,12 @@
   </footer>
 </template>
 <script>
+import  XRouteLink from "../components/XRouteLink.vue"
 export default {
   name: "IndexFooter",
+  components:{
+    XRouteLink
+  },
   props: {
     route: String,
   },

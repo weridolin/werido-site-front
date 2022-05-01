@@ -177,6 +177,7 @@
 }
 body {
   height: 100%;
+  width: 100%;
 }
 
 #app {
@@ -185,6 +186,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     height: 100%;
+      width: 100%;
 }
 
 .bg {
@@ -194,6 +196,7 @@ body {
     background-size:cover;  
     /* position: absolute; */
     height: 100%;
+      width: 100%;
 }
 
 .condition-input .el-form-item__label{

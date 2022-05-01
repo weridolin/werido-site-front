@@ -26,12 +26,12 @@
           @click="toggleMenu()"
         >
           <div class="nav_header navbar-nav_header">
-            <router-link
+            <XRouteLink
               v-for="item of list"
               :key="item.id"
               :class="{ active: $route.path == item.link }"
               :to="item.link"
-              ><div>{{ item.tag }}</div></router-link
+              ><div>{{ item.tag }}</div></XRouteLink
             >
           </div>
         </div>
@@ -41,9 +41,13 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import  XRouteLink from "../components/XRouteLink.vue"
 
 export default {
   name: "NewHeader",
+  components:{
+    XRouteLink
+  },
   data() {
     return {
       url: "https://p.pstatp.com/origin/febd000185ec2da4425e",
@@ -61,10 +65,15 @@ export default {
           tag: "主页",
           link: "/",
         },
+        // {
+        //   id: "1",
+        //   tag: "文章",
+        //   link: "/blog",
+        // },
         {
           id: "1",
           tag: "文章",
-          link: "/blog",
+          link: "https://weridolin.github.io/#/",
         },
         {
           id: "2",
@@ -78,24 +87,24 @@ export default {
         },
         {
           id: "5",
-          tag: "毒",
-          link: "/drug",
-        },
-        {
-          id: "6",
           tag: "更新轨迹",
           link: "/route",
         },
         {
-          id: "7",
-          tag: "文件中转站",
-          link: "/fileBroker",
+          id: "6",
+          tag: "疯狂实验室",
+          link: "/alinLab",
         },
-        {
-          id: "8",
-          tag: "数据生成器",
-          link: "/dataFaker",
-        },
+        // {
+        //   id: "7",
+        //   tag: "文件中转站",
+        //   link: "/fileBroker",
+        // },
+        // {
+        //   id: "8",
+        //   tag: "数据生成器",
+        //   link: "/dataFaker",
+        // },
       ],
       success: [
         {
