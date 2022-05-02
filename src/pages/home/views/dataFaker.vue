@@ -379,7 +379,7 @@ export default {
             downForm:{
                 down_code:""
             },
-            dataCount:100, //生成数据条数
+            dataCount:"100", //生成数据条数
             dynamicValidateForm: {
                 items: [{
                     id:"",
@@ -710,6 +710,13 @@ export default {
                 });
                 return
             }
+            if (this.dataCount>100000){
+                this.$message({
+                message: '资源问题暂时最多一次性只支持10W条😂',
+                type: 'error'
+                });
+                return
+            }
             let that = this
             const data = {
                 "fields":this.dynamicValidateForm.items,
@@ -721,16 +728,18 @@ export default {
                 // "key": "879baf8bbdee4f06adbc7c3cbb9581c9",
                 // "is_exist": false
                 // }
+                that.state.is_generating=true
                 console.log(res,"GET FILE UPLOAD INFO");
                 if (res.is_exist){
                     console.log(">>> is already exist!" ,res)
                 }else{
-                    that.key = res.key    
+                    that.key = res.key  
                     that.build_conn() 
                     that.startGenerateFakeData()
                 }
             })
             .catch(function (error) {
+                that.state.is_generating = false
                 console.log(">>> init data faker info error",error)
             });
         },
