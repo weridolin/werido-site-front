@@ -31,8 +31,8 @@
                     class="index-btn green"
                     >Github</a
                   >
-                  <router-link to="/blog" class="index-btn purple">
-                    博客</router-link
+                  <XRouteLink :to="'https://weridolin.github.io/#/'" class="index-btn purple">
+                    博客</XRouteLink
                   >
                 </div>
               </div>
@@ -80,6 +80,7 @@
 import scrollReveal from "scrollreveal";
 // import PostItem from "./../components/PostItem";
 import PostItemCardGroup from "./../components/PostItemCardGroup.vue";
+import  XRouteLink from "../components/XRouteLink.vue"
 
 // 1. vue对象的生命周期
 //   1). 初始化显示（只执行一次）
@@ -95,7 +96,7 @@ import PostItemCardGroup from "./../components/PostItemCardGroup.vue";
 //     * destoryed()
 export default {
   name: "Index",
-  components: { PostItemCardGroup },
+  components: { PostItemCardGroup,XRouteLink },
   data() {
     return {
       imgList: [],
