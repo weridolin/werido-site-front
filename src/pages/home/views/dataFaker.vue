@@ -796,6 +796,7 @@ export default {
                         this.state.is_generating = false
                         this.downForm.down_code = _data.download_code
                         this.getFileInfoByDownCode()
+                        this.ws_conn.close()
                         break
                     };
                 default:
