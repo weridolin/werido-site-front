@@ -12,7 +12,7 @@
           :src="musicInfo.pic"
         >
           <i class="el-icon-loading"></i>
-          <!-- <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/> -->
+
         </el-avatar>
         <span
           :class="{musicActive:isPlay}"

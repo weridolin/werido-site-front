@@ -19,6 +19,7 @@
     </transition>
     <!-- APP.vue定义组件都是页面公用的App.vue是项目的主组件，页面入口文件 ，所有页面都在App.vue下进行切换，app.vue负责构建定义及页面组件归集 -->
     <!-- <music></music>  -->
+    <!-- <auth></auth> -->
   </div>
 </template>
 <script>
@@ -26,6 +27,7 @@ import NewHeader from "./views/NewHeader";
 import IndexFooter from "./views/IndexFooter";
 import Music from "./components/Music";
 import MyMarked from "./components/MyMarked";
+import Auth from "./components/Auth"
 
 export default {
   name: "app",
@@ -34,6 +36,7 @@ export default {
     NewHeader,
     Music,
     MyMarked,
+    Auth
 
   },
   data() {

@@ -1,41 +1,48 @@
 <template>
   <div class="nav-top" :style="quiet ? navQuiet.navNoQuiet : navQuiet.navQuiet">
-    <nav class="nav container">
-      <div class="navbar-header-werido">
-        <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
-              <router-link to="/"  class="navbar-brand">
-                  werido
-              </router-link>
+    <nav class="nav-container">
 
-    <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
-        <div
-          class="navbar-toggler"
-          :class="{ change: isShow }"
-          @click="toggleMenu"
-        >
-          <div class="bar1"></div>
-          <div class="bar2"></div>
-          <div class="bar3"></div>
-        </div>
+          <div class="navbar-header-werido">
+            <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
+                  <!-- <router-link to="/"  class="navbar-brand">
+                      werido
+                  </router-link> -->
 
-        
-        <!-- 导航栏 -->
-        <div
-          v-show="isShow"
-          class="navbar-collapse blog-animation"
-          @click="toggleMenu()"
-        >
-          <div class="nav_header navbar-nav_header">
-            <XRouteLink
-              v-for="item of list"
-              :key="item.id"
-              :class="{ active: $route.path == item.link }"
-              :to="item.link"
-              ><div>{{ item.tag }}</div></XRouteLink
+        <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
+            <div
+              class="navbar-toggler"
+              :class="{ change: isShow }"
+              @click="toggleMenu"
             >
+              <div class="bar1"></div>
+              <div class="bar2"></div>
+              <div class="bar3"></div>
+            </div>
+
+            
+            <!-- 导航栏 -->
+            <div
+              v-show="isShow"
+              class="navbar-collapse blog-animation"
+              @click="toggleMenu()"
+            >
+
+              <div class="nav_header navbar-nav_header">
+                <XRouteLink
+                  v-for="item of list"
+                  :key="item.id"
+                  :class="{ active: $route.path == item.link }"
+                  :to="item.link"
+                  ><div>{{ item.tag }}</div></XRouteLink
+                >
+              </div>
+              
           </div>
-        </div>
-      </div>
+
+          <!-- <div>
+            <el-avatar shape="square" :size="size" :src="squareUrl"></el-avatar>
+          </div> -->
+          </div>
     </nav>
   </div>
 </template>
@@ -224,26 +231,13 @@ export default {
   color: #515151;
 }
 
-.nav-top {
-  width: 100%;
-  z-index: 100;
-  position: fixed;
-  top: 0px;
-  transition: background 0.8s;
-
-  nav {
-    height: 60px;
-    z-index: 50;
-    display: flex;
-    justify-self: space-between;
-    align-itme: center;
-    position: relative;
-
     .navbar-header-werido {
+      width: 100%;
       display: flex;
       flex-flow: row wrap;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
+      margin:10px -5%;
 
       .navbar-brand {
         display: flex;
@@ -261,6 +255,45 @@ export default {
         }
       }
     }
+
+.nav-top {
+  width: 100%;
+  z-index: 100;
+  position: fixed;
+  top: 0px;
+  transition: background 0.8s;
+
+  nav {
+    height: 80px;
+    z-index: 50;
+    display: flex;
+    justify-self: flex-start;
+    align-itme: center;
+    position: relative;
+
+    // .navbar-header-werido {
+    //   width: 100%;
+    //   display: flex;
+    //   flex-flow: row wrap;
+    //   justify-content: flex-start;
+    //   align-items: center;
+
+    //   .navbar-brand {
+    //     display: flex;
+    //     width: 110px;
+    //     height: 40px;
+    //     // background: url('~@/assets/logo.svg') no-repeat;
+    //     text-indent: -9999rem;
+    //     margin: 10px 0;
+    //     text-decoration: none;
+    //     flex-shrink: 0;
+
+    //     .navbar-logo {
+    //       height: 50px;
+    //       margin: 5px;
+    //     }
+    //   }
+    // }
 
     .user-info {
       position: relative;

@@ -32,6 +32,8 @@ const dataFaker =()=>
     import ('../views/dataFaker.vue')
 const alinLab=()=>
     import ('../views/alinlab.vue')
+const oauth=()=>
+    import('../views/oauth.vue')
 
 Vue.use(VueRouter)
 const name = "werido"
@@ -86,6 +88,18 @@ const routes = [{
             nav: nav1,
             footer:false,
             header:true
+        }
+    },
+    {
+        path: '/oauth',
+        name: 'oauth',
+        component: oauth,
+        meta: {
+            keepAlive: true, // 需要被缓存
+            title: 'oauth认证',
+            nav: nav1,
+            footer:false,
+            header:false
         }
     },
     {

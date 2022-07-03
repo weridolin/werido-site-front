@@ -8,6 +8,7 @@ import axios from 'axios'
 // 阿里巴巴字体图标
 import '@/assets/iconfont/iconfont.css'
 
+
 //引入nprogress
 import NProgress from 'nprogress' // 进度条
 import 'nprogress/nprogress.css' //这个样式必须引入
@@ -17,6 +18,7 @@ import vuetify from "@/plugins/vuetify"
 import echarts from 'echarts'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueParticles from 'vue-particles'
+
 
 Vue.prototype.$echarts = echarts
 import {
@@ -60,7 +62,8 @@ import {
     Header,
     Aside,
     Option,
-    Alert
+    Alert,
+    
 } from 'element-ui';
 Vue.use(Alert)
 Vue.use(Option)
